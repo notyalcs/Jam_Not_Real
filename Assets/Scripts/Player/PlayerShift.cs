@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerShift : MonoBehaviour
 {
+    public Material daySkybox;
+    public Material nightSkybox;
+
+    private bool day = true;
 
     public float moveSpeed;
     private Vector3 _destination;
@@ -25,7 +29,10 @@ public class PlayerShift : MonoBehaviour
     private void SwitchState()
     {
         if (_moving) return;
-        
+
+        day = !day;
+        RenderSettings.skybox = day ? daySkybox : nightSkybox;
+
         _state = -_state;
         var pos = transform.position;
         _destination = new Vector3(pos.x, pos.y, pos.z + _state);

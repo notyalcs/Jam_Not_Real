@@ -3,7 +3,9 @@ guid: b41ddae5a92b9224082e91b12656206b
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - daySkybox: {fileID: 2100000, guid: 2bd8959f5fbd3644aa33af1a155fc147, type: 2}
+  - nightSkybox: {fileID: 2100000, guid: cc421da483ed06c49933077a621bff25, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
