@@ -11,6 +11,7 @@ public class PlayerShift : MonoBehaviour
     private bool _shiftedForward = true;
 
     private bool _moving = false;
+    
     // Update is called once per frame
     private void Update()
     {

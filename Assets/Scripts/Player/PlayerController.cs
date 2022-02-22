@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
         
         if (direction.magnitude > 0.1f)
         {
+            gameObject.transform.LookAt(direction * 50000);
             gameObject.transform.Translate(direction * moveSpeed * Time.deltaTime);
         }
     }
