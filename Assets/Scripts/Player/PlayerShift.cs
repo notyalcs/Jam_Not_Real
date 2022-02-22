@@ -24,6 +24,8 @@ public class PlayerShift : MonoBehaviour
 
     private void SwitchState()
     {
+        if (_moving) return;
+        
         _state = -_state;
         var pos = transform.position;
         _destination = new Vector3(pos.x, pos.y, pos.z + _state);

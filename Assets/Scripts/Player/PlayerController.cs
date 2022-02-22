@@ -11,6 +11,8 @@ public class PlayerController : MonoBehaviour
 
     public bool airborne = false;
 
+    private bool lookingRight = true;
+
     private void Update()
     {
         if (!airborne)
@@ -28,11 +30,23 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         float movement = Input.GetAxisRaw("Horizontal");
-        Vector3 direction = new Vector3(movement, 0, 0).normalized;
+        
+        if (movement > 0) lookingRight = true;
+        else if (movement < 0) lookingRight = false;
+        
+        Vector3 direction = new Vector3(Math.Abs(movement), 0, 0).normalized;
         
         if (direction.magnitude > 0.1f)
         {
-            gameObject.transform.LookAt(direction * 50000);
+            if (lookingRight)
+            {
+                gameObject.transform.rotation = Quaternion.Euler(0, 0, 0);
+            }
+            else
+            {
+                gameObject.transform.rotation = Quaternion.Euler(0, 180, 0);
+            }
+            
             gameObject.transform.Translate(direction * moveSpeed * Time.deltaTime);
         }
     }
