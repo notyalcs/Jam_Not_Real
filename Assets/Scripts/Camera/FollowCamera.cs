@@ -1,30 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
 
     public GameObject player;
-    
-    public float xMin;
-    public float xMax;
-    public float yMin;
-    public float yMax;
+    public float followSpeed;
+    public float offsetOffset;
+    private float _offsetY;
+    private float _offsetZ;
+    private Vector3 _pos;
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        //player = GameObject.Find("Player");
+        _pos = transform.position;
+        _offsetY = _pos.y;
+        _offsetZ = _pos.z;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void FixedUpdate()
     {
-        var tempTransform = player.transform.position;
-        float x = Mathf.Clamp(tempTransform.x, xMin, xMax);
-        float y = Mathf.Clamp(tempTransform.y, yMin, yMax);
-
-        gameObject.transform.position = new Vector3(x, gameObject.transform.position.y + y, gameObject.transform.position.z);
+        _pos = transform.position;
+        var dest = player.transform.position;
+        transform.position = Vector3.MoveTowards(
+            _pos, new Vector3(dest.x, dest.y  + _offsetY - offsetOffset / 2, dest.z + _offsetZ + offsetOffset), followSpeed * Time.deltaTime);
     }
 }
