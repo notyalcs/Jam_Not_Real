@@ -5,46 +5,44 @@ using UnityEngine;
 public class PlayerShift : MonoBehaviour
 {
 
-    public float moveSpeed = 5.0f;
+    public float moveSpeed;
     private Vector3 _destination;
-    private bool _shiftedBack;
-    private bool _shiftedForward = true;
-
+    private int _state = -4;
+    private PlayerController _pc;
     private bool _moving = false;
+
+    private void Start()
+    {
+        _pc = GetComponent<PlayerController>();
+    }
     
-    // Update is called once per frame
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Q)) SwitchState();
         Shift();
+    }
+
+    private void SwitchState()
+    {
+        _state = -_state;
+        var pos = transform.position;
+        _destination = new Vector3(pos.x, pos.y, pos.z + _state);
+        _moving = true;
     }
 
     private void Shift()
     {
         var pos = transform.position;
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            if (_shiftedBack) return;
-            _destination = new Vector3(pos.x, pos.y, pos.z + 3);
-            _moving = true;
-            _shiftedBack = true;
-            _shiftedForward = false;
-        } else if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (_shiftedForward) return;
-            _destination = new Vector3(pos.x, pos.y, pos.z - 3);
-            _moving = true;
-            _shiftedForward = true;
-            _shiftedBack = false;
-        }
 
         if (_moving && transform.position != _destination)
         {
+            _pc.enabled = false;
             transform.position = Vector3.MoveTowards(pos, _destination, moveSpeed * Time.deltaTime);
         }
         else
         {
+            _pc.enabled = true;
             _moving = false;
         }
-        
     }
 }
